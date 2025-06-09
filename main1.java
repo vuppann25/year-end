@@ -7,8 +7,24 @@ public class main1 {
         ArrayList<college> colleges = new ArrayList<>();
         JOptionPane.showMessageDialog(null, "Welcome to the College Chancer Program!");
 
-        double gpa = Double.parseDouble(JOptionPane.showInputDialog("Enter your GPA :"));
-        int sat = Integer.parseInt(JOptionPane.showInputDialog("Enter your SAT Score (BETWEEN 400 - 1600):"));
+        double gpa = 0.0;
+        try { // error handling to make sure correct input
+            gpa = Double.parseDouble(JOptionPane.showInputDialog("Enter your GPA :"));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid GPA. Please enter a valid number between 1.0 and 4.0.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int sat = 0;
+        try {
+            Integer.parseInt(JOptionPane.showInputDialog("Enter your SAT Score (BETWEEN 400 - 1600):"));
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input for SAT Score. Please enter a valid number.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         boolean ib = JOptionPane.showConfirmDialog(null, "Are you in IB?", "IBCheck",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
@@ -78,7 +94,14 @@ public class main1 {
             club_rating = 5;
         }
 
-        double avg_chance = (gpa_rating * 0.4 + sat_rating * 0.3 + club_rating * 0.2 + (ib ? 1 : 5) * 0.1);
+        int ib_rating;
+        if (ib) {
+            ib_rating = 5;
+        } else
+            ib_rating = 2;
+
+        double avg_chance = (5.0 - gpa_rating) * 0.3 + (5.0 - sat_rating) * 0.25 + (5.1 - club_rating) * 0.2
+                + (6.0 - ib_rating) * 0.1;
         return avg_chance * 20;
     }
 }
